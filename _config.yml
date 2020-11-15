@@ -1,5 +1,5 @@
 # Site settings
-title: Code \</\> 斜杆青年
+title: Code / 斜杆青年
 SEOTitle: codeandcode | 云原生 | k8s | 算法
 header-img: img/post-bg-desk.jpg
 email: codeandcode0x@gmail.com
@@ -62,8 +62,8 @@ kramdown:
 # Gitalk
 gitalk:
   enable: true    #是否开启Gitalk评论
-  clientID: edcaa02e04e90b6c2620                            #生成的clientID
-  clientSecret: 6897df85f2ce3c66e5fe1c2a353afffb9c3665d9    #生成的clientSecret
+  clientID: 7e1acb365f08bdf6eb00                            #生成的clientID
+  clientSecret: 26fe472b2addf8951084d700de5d7172e35dbefc    #生成的clientSecret
   repo: codeandcode0x.github.io    #仓库名称
   owner: codeandcode0x    #github用户名
   admin: codeandcode0x
@@ -74,10 +74,10 @@ gitalk:
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: b50bf2b12b5338a1845e33832976fd68
+ba_track_id: 958c856693cb1ade1647d4a7c97297ff
 
 # Google Analytics
-ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
+ga_track_id: 'G-LT5BCMCJQD'            # Format: UA-xxxxxx-xx
 ga_domain: codeandcode.cn               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
