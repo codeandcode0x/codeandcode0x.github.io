@@ -221,9 +221,9 @@ func Pipeline() {
 
 管道: 把上一个操作的输出，当成下一个操作的输入，连起来，做一连串的处理操作。我们把一个通道的输出，当成下一个通道的输入也能达到管道的效果 。
 
-## 通道 + Context 设计任务调度
+## 通道 + Context 任务管理
 
-```
+```go
 package main
 
 import (
@@ -275,9 +275,9 @@ func doTask(ch chan<- int, ctx context.Context, job string) {
 - 这里用了 context.Background() 作为父会话, 然后在子协程中调用 cancel() 结束; 
 
 
-## 结束语
+## 任务调度
 
-
+continue...
 
 ### 参考
 - [godoc](https://godoc.org/context#example-WithValue)
