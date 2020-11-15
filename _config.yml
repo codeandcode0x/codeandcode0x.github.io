@@ -1,9 +1,9 @@
 # Site settings
-title: codeandcode SHARE CODE
-SEOTitle: codeandcode | SHARE CODE
+title: 斜杆青年
+SEOTitle: codeandcode | 云原生 | k8s | 算法
 header-img: img/post-bg-desk.jpg
-email: codeandcodec@gmail.com
-description: "Every failure is leading towards success."
+email: codeandcode0x@gmail.com
+description: "Code for Feature."
 keyword: "数据结构, 算法, 云原生, codeandcode, codeandcodec, 网关, k8s, codeci, istio"
 url: "http://codeandcode0x.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
@@ -11,7 +11,7 @@ github_repo: "https://github.com/codeandcode0x/codeandcode0x.github.io.git" # yo
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Goals determine what you going to be!"
+sidebar-about-description: "Code for Feature"
 sidebar-avatar: /img/earth_avatar.jpeg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
@@ -19,10 +19,10 @@ sidebar-avatar: /img/earth_avatar.jpeg      # use absolute URL, seeing it's used
 # SNS settings
 RSS: false
 # weibo_username:     codeandcodec
-zhihu_username:     codeandcodec
-github_username:    codeandcodec
-facebook_username:  baiying.qiu.7
-jianshu_username:   e71990ada2fd
+zhihu_username:     codeandcode0x
+github_username:    codeandcode0x
+facebook_username:  codeandcode0x
+jianshu_username:   codeandcode0x
 #twitter_username:   codeandcodec
 
 
@@ -64,9 +64,9 @@ gitalk:
   enable: true    #是否开启Gitalk评论
   clientID: f2c84e7629bb1446c1a4                            #生成的clientID
   clientSecret: ca6d6139d1e1b8c43f8b2e19492ddcac8b322d0d    #生成的clientSecret
-  repo: codeandcodec.github.io    #仓库名称
-  owner: codeandcodec    #github用户名
-  admin: codeandcodec
+  repo: codeandcode0x.github.io    #仓库名称
+  owner: codeandcode0x    #github用户名
+  admin: codeandcode0x
   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
@@ -78,7 +78,7 @@ ba_track_id: b50bf2b12b5338a1845e33832976fd68
 
 # Google Analytics
 ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-ga_domain: codeandcodec.top               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+ga_domain: codeandcode.cn               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
 
@@ -99,16 +99,10 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "WY",
-        href: "http://zhengwuyang.com"
+        title: "简书·codeandcode",
+        href: "https://www.jianshu.com/u/db501d9c8dd2"
     },{
-        title: "简书·BY",
-        href: "http://www.jianshu.com/u/e71990ada2fd"
-    },{
-        title: "Apple",
-        href: "https://apple.com"
-    },{
-        title: "Apple Developer",
-        href: "https://developer.apple.com/"
+        title: "cnblogs·codeandcode",
+        href: "https://home.cnblogs.com/"
     }
 ]
