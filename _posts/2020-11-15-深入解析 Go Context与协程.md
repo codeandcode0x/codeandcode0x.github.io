@@ -4,7 +4,7 @@ title:      深入解析 Go Context 与 协程
 subtitle:   使用 Go Context 和通道做任务管理
 date:       2020-11-15
 author:     ethan.luo
-header-img: img/post-bg-map.jpg
+header-img: img/post-bg-universe.jpg
 catalog: true
 tags:
     - Goroutine
@@ -56,7 +56,7 @@ func main() {
 ## context.WithValue
 如果需要往子协程中传递参数，可以使用 context.WithValue()。
 
-```
+```go
 type Options struct{ Interval time.Duration }
 
 func doTask(ctx context.Context, name string) {
@@ -77,8 +77,8 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	vCtx := context.WithValue(ctx, "options", &Options{1})
 
-	go doTask(vCtx, "worker1")
-	go doTask(vCtx, "worker2")
+	go doTask(vCtx, "task1")
+	go doTask(vCtx, "task2")
 
 	time.Sleep(3 * time.Second)
 	cancel()
@@ -92,11 +92,11 @@ func main() {
 ## context.WithTimeout
 如果需要控制子协程的执行时间，可以使用 context.WithTimeout 创建具有超时通知机制的 Context 对象。
 
-```
+```go
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	go doTask(ctx, "worker1")
-	go doTask(ctx, "worker2")
+	go doTask(ctx, "task1")
+	go doTask(ctx, "task2")
 
 	time.Sleep(3 * time.Second)
 	fmt.Println("before cancel")
@@ -114,7 +114,7 @@ WithTimeout()的使用与 WithCancel() 类似，多了一个参数，用于设�
 
 超时退出可以控制子协程的最长执行时间，那 context.WithDeadline() 则可以控制子协程的最迟退出时间。
 
-```
+```go
 func doTask(ctx context.Context, name string) {
 	for {
 		select {
@@ -130,8 +130,8 @@ func doTask(ctx context.Context, name string) {
 
 func main() {
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(1*time.Second))
-	go doTask(ctx, "worker1")
-	go doTask(ctx, "worker2")
+	go doTask(ctx, "task1")
+	go doTask(ctx, "task2")
 
 	time.Sleep(3 * time.Second)
 	fmt.Println("before cancel")
@@ -144,11 +144,135 @@ func main() {
 - WithDeadline 用于设置截止时间。在这个例子中，将截止时间设置为1s后，cancel() 函数在 3s 后调用，因此子协程将在调用 cancel() 函数前结束。
 - 在子协程中，可以通过 ctx.Err() 获取到子协程退出的错误原因。
 
-可以看到，子协程 worker1 和 worker2 均是因为截止时间到了而退出。
+可以看到，子协程 task1 和 task2 均是因为截止时间到了而退出。
 
 
-## chan + Context 设计任务调度
+## 通道
 
+我们先看 chan 的实例
+
+```go
+
+//chan 同步通道 (无缓存通道)
+func ChanNoCache() {
+	ch := make(chan int, 0)
+
+	go func() {
+		var sum int = 0
+		for i :=0; i<10; i++ {
+			sum = sum + i
+		}
+		ch <- sum
+	}()
+	//在计算sum和的goroutine没有执行完，把值赋给ch通道之前，
+	//fmt.Println(<-ch)会一直等待
+	log.Println(<-ch)
+
+}
+
+//chan 通道 (有缓存)
+func ChanWithCache()  string {
+	response := make(chan string, 3)
+
+	go func() { response <- http.Request("https://godoc.org/google.golang.org/grpc") }()
+	go func() { response <- http.Request("https://godoc.org/debug/gosym") }()
+	go func() { response <- http.Request("https://godoc.org/context") }()
+
+	//输出所有数据
+	for i:=0 ; i< cap(response); i++ {
+		log.Println(<-response)
+		log.Println("----------", i)
+	}
+
+	//返回最快的获取到数据
+	return <- response
+}
+
+//pipeline 管道
+func Pipeline() {
+	begin := make(chan int, 0)
+	end := make(chan int, 0)
+
+	go func() {
+		begin <- 10
+	}()
+
+
+	go func() {
+		num := <- begin
+		end <- num
+	}()
+
+	log.Println(<-end)
+
+}
+
+
+```
+
+- 通道 (同步和缓存)
+- 管道 (生产者和消费者)
+
+在多个goroutine并发中，我们不仅可以通过原子函数和互斥锁保证对共享资源的安全访问，消除竞争的状态，还可以通过使用通道，在多个goroutine发送和接受共享的数据，达到数据同步的目的。
+
+通道，他有点像在两个routine之间架设的管道，一个goroutine可以往这个管道里塞数据，另外一个可以从这个管道里取数据，有点类似于我们说的队列。
+
+通道类型和Map这些类型一样，可以使用内置的make函数声明初始化，这里我们初始化了一个chan int类型的通道，所以我们只能往这个通道里发送int类型的数据，当然接收也只能是int类型的数据。
+
+管道: 把上一个操作的输出，当成下一个操作的输入，连起来，做一连串的处理操作。我们把一个通道的输出，当成下一个通道的输入也能达到管道的效果 。
+
+## 通道 + Context 设计任务调度
+
+```
+package main
+
+import (
+	"context"
+	"strconv"
+	"fmt"
+)
+
+
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	i := 0
+	for {
+		generateJob(ctx, "itask" + strconv.Itoa(i))
+		i++
+		if i> 10000 {
+			break
+		}
+	}
+}
+
+//生成 job
+func generateJob(parent context.Context, value string) {
+	ch := make(chan int, 0)
+	ctx, cancel := context.WithCancel(parent)
+	go doTask(ch, ctx, value)
+	<-ch
+	cancel()
+}
+
+
+//执行任务
+func doTask(ch chan<- int, ctx context.Context, job string) {
+	select {
+	case <-ctx.Done():
+		fmt.Println("job is closed", job)
+		return
+	default:
+		fmt.Println(job, "is running")
+		ch <- 1
+	}
+}
+
+
+```
+
+- 用通道来控制协程执行的状态 "ch <- 1", 当 <-ch 接受完传值后任务即结束 ;
+- 这里用了 context.Background() 作为父会话, 然后在子协程中调用 cancel() 结束; 
 
 
 ## 结束语
@@ -156,10 +280,6 @@ func main() {
 
 
 ### 参考
+- [godoc](https://godoc.org/context#example-WithValue)
 
-- [WWDC 2018 Keynote](https://developer.apple.com/videos/play/wwdc2018/101/)
-- [Apple WWDC 2018: what's new? All the announcements from the keynote](https://www.techradar.com/news/apple-wwdc-2018-keynote)
-- [iOS 加入「防沉迷」，macOS 有了暗色主题，今年的 WWDC 重点都在系统上](http://www.ifanr.com/1043270)
-- [苹果 WWDC 2018：最全总结看这里，不错过任何重点](https://sspai.com/post/44816)
- 
 
