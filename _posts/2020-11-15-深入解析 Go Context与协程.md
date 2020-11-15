@@ -4,7 +4,7 @@ title:      深入解析 Go Context 与 协程
 subtitle:   使用 Go Context 和通道做任务管理
 date:       2020-11-15
 author:     ethan.luo
-header-img: img/post-bg-universe.jpg
+header-img: img/post-bg-keybord.jpg
 catalog: true
 tags:
     - Goroutine

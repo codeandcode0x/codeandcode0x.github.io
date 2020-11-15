@@ -1,5 +1,5 @@
 # Site settings
-title: Code "/" 斜杆青年
+title: Code \</\> 斜杆青年
 SEOTitle: codeandcode | 云原生 | k8s | 算法
 header-img: img/post-bg-desk.jpg
 email: codeandcode0x@gmail.com
@@ -62,8 +62,8 @@ kramdown:
 # Gitalk
 gitalk:
   enable: true    #是否开启Gitalk评论
-  clientID: f2c84e7629bb1446c1a4                            #生成的clientID
-  clientSecret: ca6d6139d1e1b8c43f8b2e19492ddcac8b322d0d    #生成的clientSecret
+  clientID: edcaa02e04e90b6c2620                            #生成的clientID
+  clientSecret: 6897df85f2ce3c66e5fe1c2a353afffb9c3665d9    #生成的clientSecret
   repo: codeandcode0x.github.io    #仓库名称
   owner: codeandcode0x    #github用户名
   admin: codeandcode0x
