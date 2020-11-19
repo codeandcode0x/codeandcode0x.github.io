@@ -277,7 +277,32 @@ func doTask(ch chan<- int, ctx context.Context, job string) {
 
 ## 任务调度
 
-continue...
+```go
+//生成 jobs
+func GenerateJobs(pch chan<- context.Context, parent context.Context) {
+    //设置 context
+    ctx, cancel := context.WithCancel(parent)
+    //设置通道
+    ch := make(chan context.Context, 0)
+    //任务调度方法
+    go doTaskScheduler(...)
+    //等任务执行完, 接受信号
+    pctx := <-ch
+    pch <- pctx
+    //销毁资源
+    for {
+        select {
+            case <-ctx.Done():
+            	recycle() //回收调度资源
+                cancel()
+                return
+            default:
+                break
+        }
+    }
+}
+```
+任务调度 doTaskScheduler(...) 可以实现任务在不同的节点上执行，可以对节点进行资源计算等等，完成调度任务。等任务执行完成会返回结束新号，告诉当前协程，子协程已经结束，并对资源进行回收。
 
 ### 参考
 - [godoc](https://godoc.org/context#example-WithValue)
