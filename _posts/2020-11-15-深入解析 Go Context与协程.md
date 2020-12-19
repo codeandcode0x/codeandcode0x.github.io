@@ -12,7 +12,6 @@ tags:
     - 任务调度
 ---
 
-## 前言
 Go 语言提供了 Context 标准库是为了解决复杂的并发场景下，对协程有更好的控制。Context 的作用和它的名字很像，上下文，即子协程的下上文。Context 有两个主要的功能:
 
 - **通知子协程退出**（正常退出，超时退出等）;
@@ -305,6 +304,6 @@ func GenerateJobs(pch chan<- context.Context, parent context.Context) {
 任务调度 doTaskScheduler(...) 可以实现任务在不同的节点上执行，可以对节点进行资源计算等等，完成调度任务。等任务执行完成会返回结束新号，告诉当前协程，子协程已经结束，并对资源进行回收。
 
 ### 参考
-- [godoc](https://godoc.org/context#example-WithValue)
+- [go context](https://godoc.org/context#example-WithValue)
 
 
