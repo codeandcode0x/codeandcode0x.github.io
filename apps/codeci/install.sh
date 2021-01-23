@@ -9,7 +9,7 @@ CODECI_INSTALL_DIR="/usr/local/bin"
 
 CODECI_CLI_FILE="${CODECI_INSTALL_DIR}/${CODECI_CLI_FILENAME}"
 
-# GITHUB_TOKEN="f12a07212e0668e9bd2f4eef371714e2ef10c63c"
+# GITHUB_TOKEN="40c68b1cda1bf76802c04d06530bafff96478aa5"
 
 GITHUB_ORG=codeandcode0x
 GITHUB_REPO=codeci
@@ -89,13 +89,13 @@ checkExistingCodeci() {
 
 
 getLatestRelease() {
-    local codeciReleaseUrl="https://api.github.com/repos/${GITHUB_ORG}/${GITHUB_REPO}/releases"
+    local codeciReleaseUrl="https://api.github.com/repos/${GITHUB_ORG}/${GITHUB_REPO}/releases?client_id=7e1acb365f08bdf6eb00&client_secret=673fc9a42c2821c945287b48ac14129d2b8aebd2"
     local latest_release=""
 
     if [ "$CODECI_HTTP_REQUEST_CLI" == "curl" ]; then
-        latest_release=$(curl -u f12a07212e0668e9bd2f4eef371714e2ef10c63c:x-oauth-basic -s $codeciReleaseUrl | grep \"tag_name\" | grep -v rc | awk 'NR==1{print $2}' |  sed -n 's/\"\(.*\)\",/\1/p')
+        latest_release=$(curl -s $codeciReleaseUrl | grep \"tag_name\" | grep -v rc | awk 'NR==1{print $2}' |  sed -n 's/\"\(.*\)\",/\1/p')
     else
-        latest_release=$(wget -q --header="Accept: application/json" --header="Authorization: token f12a07212e0668e9bd2f4eef371714e2ef10c63c" -O - $codeciReleaseUrl | grep \"tag_name\" | grep -v rc | awk 'NR==1{print $2}' |  sed -n 's/\"\(.*\)\",/\1/p')
+        latest_release=$(wget -q --header="Accept: application/json" -O - $codeciReleaseUrl | grep \"tag_name\" | grep -v rc | awk 'NR==1{print $2}' |  sed -n 's/\"\(.*\)\",/\1/p')
     fi
 
     ret_val=$latest_release
