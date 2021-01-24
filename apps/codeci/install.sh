@@ -157,7 +157,8 @@ installFile() {
     fi
 
     if [ ! -d "$HOME_DIR/deployconfig.json" ]; then
-        cat << EOF >HOME_DIR/deployconfig.json
+        mkdir -p $HOME_DIR
+        cat << EOF >$HOME_DIR/deployconfig.json
 {
   "servicepath": "[service paths]",
   "dbsrcname": "[database service name]",
