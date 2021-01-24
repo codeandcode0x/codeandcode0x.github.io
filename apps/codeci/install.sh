@@ -151,9 +151,12 @@ installFile() {
         exit 1
     fi
 
-    if [ ! -d "~/.codeci/" ]; then
-        HOME_DIR="~/.codeci/"
+    HOME_DIR="~/.codeci/"
+    if [ ! -d $HOME_DIR ]; then
         mkdir -p $HOME_DIR
+    fi
+
+    if [ ! -d "$HOME_DIR/deployconfig.json" ]; then
         cat << EOF >HOME_DIR/deployconfig.json
 {
   "servicepath": "[service paths]",
