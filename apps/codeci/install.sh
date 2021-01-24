@@ -151,14 +151,10 @@ installFile() {
         exit 1
     fi
 
-    HOME_DIR="~/.codeci/"
-    if [ ! -d $HOME_DIR ]; then
-        mkdir -p $HOME_DIR
-    fi
-
-    if [ ! -d "$HOME_DIR/deployconfig.json" ]; then
-        mkdir -p $HOME_DIR
-        cat << EOF >$HOME_DIR/deployconfig.json
+    mkdir -p ~/.codei/
+    
+    if [ ! -f ~/.codeci/deployconfig.json ]; then
+        cat << EOF >~/.codeci/deployconfig.json
 {
   "servicepath": "[service paths]",
   "dbsrcname": "[database service name]",
