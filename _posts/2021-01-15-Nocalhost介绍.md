@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      Nocalhost 介绍
-subtitle:   使用 Nocalhost 云端开发 by CODING
+title:      Nocalhost 云端开发 by CODING
+subtitle:   云端开发已来
 date:       2021-01-15
 author:     ethan.luo
 header-img: img/post-bg-keybord.jpg
@@ -99,13 +99,14 @@ Use NodePort instead of LoadBalancer, close DB persistence(DO NOT USE FOR PRODUC
 nhctl init -n nocalhost -t nodeport -p 7000 --force --set mariadb.primary.persistence.enabled=false
 Waiting for the initialization process:
 
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/1.png)
 
 
 After the initialization:
 
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/2.png)
 
-
-[MINIKUBE WARN]: Please do not close above terminal for the port to be able to keep forwarding
+MINIKUBE WARN: Please do not close above terminal for the port to be able to keep forwarding
 
 nhctl init command flags
 
@@ -119,7 +120,7 @@ nhctl init command flags
 ### Step 3: Configure and login Nocalhost Server in VSCode
 Open the VSCode extension page, click on the “Config Server URL” button at left:
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/3.png)
 
 Input the access address from Step Two, press Enter to save Input the username and password respectively, press Enter to save:
 
@@ -127,58 +128,58 @@ Username: foo@nocalhost.dev
 Password: 123456
 After login, you can find:
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/4.png)
 
 ### Step 4: Install demo application: bookinfo
 Click the installation icon at the left to install application bookinfo
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/5.png)
 
 After it, Nocalhost starts to execute the installation.
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/6.png)
 
 You can click on the refresh icon to check the status of installation and startup process
 
 After all microservices startup, you will find
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/7.png)
 
 Now, you can visit the appliction website:
 
 http://127.0.0.1:39080/productpage
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/8.png)
 
 ### Step 5: Start DevMode
 Switch the service to the DevMode by clicking on the green hammer icon.
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/9.png)
 
 Select “Clone from Git repo” and specify a local address for Nocalhost to clone the source code.
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/10.png)
 
 After the source code is checked out, Nocalhost will open a new VSCode window, and continue to switch to the DevMode.
 
 When it is completed (it will take long time when it is the first time to run it), you will find:
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/11.png)
 
 Under the DevMode, the main process will not startup by default for the DevContainer, and therefore it will not respond the request from the website. While refresh the webpage, the webpage will be on error and will be recovered, until you start up again.
 
 You can execute sh run.sh to start your process.
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/12.png)
 
 ### Step 6: Change the code and check the result
 You can try to change a piece of code, refresh and check the result. For example: add "Hello Nocalhost!" at line 355 in the file productpage.py. Do not forget to save the file. 😎
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/13.png)
 
 Refresh the webpage, here is the outcome: http://127.0.0.1:39080/productpage 😄
 
-
+![ltm.png](http://codeandcode0x.github.io/img/nocalhost/14.png)
 
 Congratulations!
 You have had a great experience about the Cloud Native development through above Nocalhost simple tutorial. You can start to try to configure and use the Nocalhost in the real project now.
