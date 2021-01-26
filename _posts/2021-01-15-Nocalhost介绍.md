@@ -19,7 +19,7 @@ tags:
 我真正理解 Cloud Native 是从了解它的反义词开始的。对于不理解的东西尝试去看它的反面往往会豁然开朗。那 Cloud Native 的反面是啥呢？不是 Cloud in-Native 也不是 Non-Cloud Native，而是 Machine Native（这里顺便推荐一本书《反脆弱》，脆弱的反面不是坚强，而是反脆弱，很有意思的观点，值得一读。）。这是一个巨大的概念飞跃。从计算机诞生以来，一直都是有个机器的概念，是一个具象的，物理的机器。云的出现第一次把这个具象打破了，你所依赖的计算资源再也不是一台/多台机器，而是一朵云。不是说把一坨机器放一起就是云。云包含了大量对于硬件的抽象，以及服务能力的抽象，使得上层应用可以完全脱离对于物理硬件的依赖。过去我们写程序的时候，必须要考虑的三大件有“内存，硬盘，CPU”，这也是冯诺依曼架构的核心。 从某种意义上讲，云的出现使得计算机行业变相的突破了冯诺依曼架构，或者说也是应对摩尔定律到头了的解决方案。现在 Cloud Native/云原生的应用，已经完全摆脱了对于三大件的依赖，所有需要的资源都是通过云 API 获取。
 
 ![ltm.png](http://codeandcode0x.github.io/img/nocalhost1.png)
-（冯诺依曼计算机结构）
+                         （冯诺依曼计算机结构）
 
 最近流行的 Serverless 技术，也是这一理念的延申。这里的最终效果就是往云上扔一个应用，就能顺畅的跑起来，至于怎么调度计算资源，用哪里的计算资源，那是云的事情。正如你把电风扇的插头插到墙上就应该能转，至于这个电怎么来的，电网怎么运行的，风力还是火力，你关心嘛？ 
 
@@ -33,7 +33,7 @@ tags:
 于是云原生概念出现了，你不光要上云还得云原生，这叫上云 2.0。也就是把传统应用改造成云应用。这里涉及到的点大概有，把应用拆成微服务，容器化，数据库也别自己装 MySQL 了，直接用云数据库，还有其他比如缓存，监控，日志啥的，云统统给你搞定，你管好应用的业务逻辑就好了。改造完了以后你会发现，这个应用大量依赖云的能力，从某种意义上讲你的应用再也不能在你自己的机器上跑起来了。所以我给云原生下了一个定义“离开云活不了，叫做云原生”。这个时代早晚要来的，我们现在离开了电也活不了。
 
 ![ltm.png](http://codeandcode0x.github.io/img/nocalhost2.png)
- （云原生架构）
+                           （云原生架构）
 
 当你的应用云原生以后，你会发现另外一个问题，开发这些应用变得非常困难，因为你的开发工具都是为开发传统应用准备的，为了开发云应用，你必须调整自己的开发工具和开发方式。这里就需要上云三步曲的最后一步，开发云原生，也就是上云 3.0。
 
@@ -86,8 +86,10 @@ For TKE clusters, configure open external network access: 0.0.0.0/0 or cluster e
 
 Initialize at terminal:
 
-
+```sh
 nhctl init -n nocalhost -p 7000
+```
+
 Option 2: If you use a Kubernetes cluster such as minikube, kind, k3s, microk8s, etc., use the following command to initialize:
 
 nhctl init -n nocalhost -t nodeport
@@ -95,8 +97,9 @@ About Kubernetes without LoadBalancer and PV
 
 Use NodePort instead of LoadBalancer, close DB persistence(DO NOT USE FOR PRODUCTION)
 
-
+```sh
 nhctl init -n nocalhost -t nodeport -p 7000 --force --set mariadb.primary.persistence.enabled=false
+```
 Waiting for the initialization process:
 
 ![ltm.png](http://codeandcode0x.github.io/img/nocalhost/1.png)
