@@ -165,7 +165,7 @@ downloadFile $ret_val
 installFile
 
 #
-echo "|"
+echo "➜ "
 echo "You can run 'helmtrans -h' to preview help."
 
 

@@ -192,7 +192,7 @@ downloadFile $ret_val
 installFile
 
 #
-echo "|"
+echo "➜ "
 echo "You can run 'codeci -h' to preview help."
 
 
