@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      k8s resource limit 配置优化
+title:      K8s Resource Limit 配置优化
 subtitle:   资源配置
 date:       2021-02-18
 author:     ethan.luo
